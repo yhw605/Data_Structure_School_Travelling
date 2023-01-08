@@ -69,10 +69,10 @@ void fordFulkerson(Graph* g, vexNode* v, int start, int end) {
 		int flow = bfs(start, end, g->vexNum);
 		if (flow == -1) break;
 		int cur = end;
-		while (cur != start) { // 更新残留网络
+		while (cur != start) {
 			int father = parent[cur];
-			matrix[father][cur] -= flow; // 正向减
-			matrix[cur][father] += flow; // 反向加
+			matrix[father][cur] -= flow;
+			matrix[cur][father] += flow;
 			cur = father;
 		}
 		maxFlow += flow;
@@ -126,12 +126,12 @@ int bfs(int start, int end, int vexNum) {
 	while (!q.empty()) {
 		int u = q.front();
 		q.pop();
-		if (u == end) break; // 如果结点u到达了终点end，那么退出循环，找到一条增广路
+		if (u == end) break;
 		for (int i = 1; i <= vexNum; ++i) {
 			if (i != start && matrix[u][i] > 0 && parent[i] == -1) {
-				parent[i] = u; // 记录前驱
+				parent[i] = u;
 				q.push(i);
-				flow[i] = min(flow[u], matrix[u][i]); // 将流量更新为结点u和matrix[u][i]之间的最小值
+				flow[i] = min(flow[u], matrix[u][i]);
 			}
 		}
 	}
