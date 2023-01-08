@@ -67,15 +67,15 @@ void fordFulkerson(Graph* g, vexNode* v, int start, int end) {
 	int maxFlow = 0;
 	while (1) {
 		int flow = bfs(start, end, g->vexNum);
-		if (flow == -1) break;
-		int cur = end;
-		while (cur != start) { // 更新残留网络
-			int father = parent[cur];
+		if (flow == -1) break; // 说明已经找到了所有的增广路
+		int cur = end; // 结点从结尾开始更新残留网络
+		while (cur != start) { // 更新残留网络，直到结点到达起点
+			int father = parent[cur]; // 将结点从前驱一直往前推
 			matrix[father][cur] -= flow; // 正向减
 			matrix[cur][father] += flow; // 反向加
 			cur = father;
 		}
-		maxFlow += flow;
+		maxFlow += flow; // 每找到一条增广路就更新最大流的值
 	}
 
 	printf("从%s到%s的所有道路能承载的最大游览量（人流量）是%d\n", v[start - 1].name, v[end - 1].name, maxFlow);
