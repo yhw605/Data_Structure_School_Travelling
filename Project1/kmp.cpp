@@ -5,16 +5,16 @@
 
 int fail[100]; // 定义fail[]数组
 
-void kmpAutomation(char* P) { // 构建fail[1..p]数组
-	fail[0] = 0;
-	fail[1] = 0;
+void kmpAutomation(char* P) { // 构建fail[1..p]数组，fail数组就是指示向后滑移的位数
+	fail[0] = 0; // fail[0]实际上被弃用了
+	fail[1] = 0; 
 	for (int i = 1; i < strlen(P); ++i) {
-		int j = fail[i];
-		while (j && P[i] != P[j]) {
+		int j = fail[i]; 
+		while (j && P[i] != P[j]) { // 寻找P[0..i]后缀与P的前缀的最大匹配位数
 			j = fail[j];
 		}
 		if (P[i] == P[j]) {
-			fail[i + 1] = j + 1;
+			fail[i + 1] = j + 1; // 这也是fail[0]被弃用的一个细节
 		} else {
 			fail[i + 1] = 0;
 		}		
